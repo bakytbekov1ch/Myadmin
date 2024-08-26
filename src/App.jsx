@@ -20,6 +20,13 @@ function App() {
     handleClick();
   }, []);
 
+  const handleRemove = (id) => {
+    axios
+      .delete(`${API}/${id}`)
+      .then(() => setValue((remove) => remove.filter((x) => x.id !== id)))
+      .catch((err) => console.log(err));
+  };
+
   return (
     <div className="apple">
       <div className="container">
@@ -31,6 +38,7 @@ function App() {
                 <th>Payeer</th>
                 <th>Chek ID</th>
                 <th>Date</th>
+                <th>Remove</th>
               </tr>
             </thead>
             <tbody>
@@ -40,6 +48,17 @@ function App() {
                   <td>{item.payeer}</td>
                   <td>{item.price}</td>
                   <td>{item.date}</td>
+                  <td
+                    onClick={() => handleRemove(item.id)}
+                    style={{
+                      background: "green",
+                      cursor: "pointer",
+                      textAlign: "center",
+                      color: "white",
+                    }}
+                  >
+                    delete
+                  </td>
                 </tr>
               ))}
             </tbody>
